@@ -1,6 +1,6 @@
 # gmx-polymer-tools
 
-Perl scripts for polymer modeling usind GROMACS
+Perl scripts for polymer modeling using GROMACS
 
 ## Functions
 
@@ -10,11 +10,11 @@ These are
 
 - mol22rtp.pl : translates [sybyl-mol2 format][2] file (\*.mol2) to GROMACS [residue topology format][3] file (\*.rtp)  
 
-- rtp2tmer.pl : translates plain rtp format file (\*.rtp) of trimer to meaningful rtp file (\*.rtp) 
+- rtp2tmer.pl : translates plain rtp format file (\*.rtp) of trimer to real rtp file (\*.rtp) 
 
-- rtp2hdb.pl : create [hydrogen databese][4] file (\*.hdb) for the terminal residues from the meaningful trimer rtp file (\*.rtp) 
+- rtp2hdb.pl : create [hydrogen databese][4] file (\*.hdb) for the terminal residues from the real rtp file (\*.rtp) 
 
-- pdb2tmer.pl : create plain pdb format file (\*.pdb) of trimer to meaningful trimer pdb file (\*.pdb) for [pdb2gmx][5]
+- pdb2tmer.pl : create plain pdb format file (\*.pdb) of trimer to the trimer pdb file (\*.pdb) for [pdb2gmx][5]
 
 - cn-term.pl : translate pdb file's the first and the last residues to be the terminal residues.
 
@@ -24,7 +24,7 @@ And additionally,
 
 - frcmod2gmx.pl :translates [AMBER parameter modification file][7] (\*.frcmod) to GROMACS forcefiled data files (\*.itp, \*.atp).
 
-These two scripts are not specifically for polymer modeling, but help to provide general AMBER (GAFF) force fields for pdb2gmx in GROMACS. 
+These two scripts are not specifically for polymer modeling, but help to provide general AMBER (GAFF) force fields for GROMACS pdb2gmx. 
 
 ## Usage
 
@@ -32,13 +32,17 @@ These two scripts are not specifically for polymer modeling, but help to provide
 
 Input \*.mol2 file is assumed to be generated with [antechamber][3] with proper force field (e.g. GAFF) atom types and charges.
 
-Resultant \*.lt file can be input for rtp2tmer.pl
+Resultant plain \*.rtp file can be input for rtp2tmer.pl as,
 
 `rtp2tmer.pl -n 7 -c 29 < 3lla.rtp > lla.rtp`
 
+Resultant lla.rtp is the final residue topology files for the monomar (here lla, L-lactic acid) as new residue.
+
+Corresponding hydrogen databese file (\*.hdb) for the terminal residues can be created from this rtp file.
+
 `rtp2hdb.pl < lla.rtp > lla.hdb`
 
-These lla.rtp and lla.hdb are the final residue topology files for one monomar (here lla, L-lactic acid) as new residue.
+Trimer pdb file (3lla.pdb) can be translated to the pdb file suitable for pdb2gmx by
 
 `pdb2tmer.pl -n 7 -c 29 < 3lla.pdb > 3lla_4pdb2gmx.pdb`
 
@@ -70,7 +74,7 @@ This creates
 
 - forcefield.itp
 
-Resultanf gaff.ff can be used for pdb2gmx.
+Resultant gaff.ff can be used for pdb2gmx.
 
 To obtain GROMACS force field data files from AMBER parameter modification file,
 
